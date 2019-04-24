@@ -7,18 +7,18 @@ $(function(){
 		if(areaAds){
 			let arrAds = areaAds.split(/\r\n|\r|\n/)
 			arrAds = arrAds.map(s => s.trim())
-			fillForm(arrAds)
+			fillForm(caseNum, arrAds)
 		}
 	})
 
-	function fillForm(ads){
+	function fillForm(caseNum, ads){
 		chrome.tabs.update({
     	url: "https://www.facebook.com/help/contact/362415677832739"
 		}, function(tab) {
 	    chrome.tabs.onUpdated.addListener(function listener(tabId, changeInfo) {
 	      if (tabId === tab.id && changeInfo.status == 'complete') {
 	        chrome.tabs.onUpdated.removeListener(listener)
-	        chrome.tabs.sendMessage(tabId, ads)
+	        chrome.tabs.sendMessage(tabId, {"caseNum":caseNum, "ads":ads})
 	      }
 	    })
 		})
@@ -32,7 +32,7 @@ $(function(){
 					const strCaseNum = strUrl.match(/jobs=(\d+)/)[1]
 					$("#case-num").val(strCaseNum)
 				}else{
-					$("#case-num").val("不明です")
+					$("#case-num").val("Case Number Unknown")
 				}
 		})
 	}
