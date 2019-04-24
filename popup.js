@@ -1,7 +1,4 @@
 $(function(){
-	const TXT_UNKNOWN = "不明です"
-	const TXT_FAIL = "あいにく、情報を取得できませんでした"
-
 	$('#btn-case-info').click(function(){
 		const areaAds = $('#input_text').val()
 		if(areaAds){
@@ -11,12 +8,6 @@ $(function(){
 		}
 	})
 
-
-	function getText() {
-
-		return arrAds
-	}
-
 	function fillForm(ads){
 		chrome.tabs.query({currentWindow: true, active: true},
 			function(tabs){
@@ -24,13 +15,5 @@ $(function(){
 				})
 			}
 		)
-	}
-
-	function showMsg(str){
-		alert(txt_clip + str)
-		chrome.runtime.sendMessage({
-			type: 'copy',
-			text: str
-		})
 	}
 })
