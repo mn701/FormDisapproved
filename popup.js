@@ -9,11 +9,15 @@ $(function(){
 	})
 
 	function fillForm(ads){
-		chrome.tabs.query({currentWindow: true, active: true},
-			function(tabs){
-				chrome.tabs.sendMessage(tabs[0].id, ads, function(res){
-				})
-			}
-		)
+		chrome.tabs.update({
+    	url: "https://www.facebook.com/help/contact/362415677832739"
+		}, function(tab) {
+	    chrome.tabs.onUpdated.addListener(function listener(tabId, changeInfo) {
+	      if (tabId === tab.id && changeInfo.status == 'complete') {
+	        chrome.tabs.onUpdated.removeListener(listener)
+	        chrome.tabs.sendMessage(tabId, ads)
+	      }
+	    })
+		})
 	}
 })
