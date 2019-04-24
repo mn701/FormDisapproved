@@ -1,10 +1,13 @@
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-  const ads = request
+  const caseNum = request.caseNum
+  const ads = request.ads
   $("#317701148281405").val("Jun Iwata")
-  $("#1417073758607475").val("testcasenumber")
+  if(caseNum){
+    $("#1417073758607475").val(caseNum)
+  }
   $('input[name=disapproval_reason]').val(['ad_disapproval'])
   $('input[name=Field1496973637295144]').val(['yes'])
-  $("#224948714266660").val("000")
+  $("#224948714266660").val(ads[0])
   $("#296084320450771").val("Dear team,\n\nCould you check on below Ad?\nA campaign already started, so client really concerns about this Ad.\n\n*If this ad will not be approved, please let me know the reason clearly. because the user stick to this one.\n\nBest Regards,")
   $('label[for="1496973637295144.0"]').click()
 
