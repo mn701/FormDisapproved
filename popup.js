@@ -3,29 +3,24 @@ $(function(){
 	const TXT_FAIL = "あいにく、情報を取得できませんでした"
 
 	$('#btn-case-info').click(function(){
-			getCaseNumUrl()
-			getTabElements()
+		const areaAds = $('#input_text').val()
+		if(areaAds){
+			let arrAds = areaAds.split(/\r\n|\r|\n/)
+			arrAds = arrAds.map(s => s.trim())
+			fillForm(arrAds)
+		}
 	})
 
 
+	function getText() {
 
-	function getCaseNumUrl(){
-		chrome.tabs.getSelected(null,function(tab) {
-				const strUrl = tab.url
-				const myregex = RegExp('jobs=(\\d+)')
-				if(myregex.test(strUrl)){
-					const strCaseNum = strUrl.match(/jobs=(\d+)/)[1]
-					$("#case-num").val(strCaseNum)
-				}else{
-					$("#case-num").val(TXT_UNKNOWN)
-				}
-		})
+		return arrAds
 	}
 
-	function getTabElements(){
+	function fillForm(ads){
 		chrome.tabs.query({currentWindow: true, active: true},
 			function(tabs){
-				chrome.tabs.sendMessage(tabs[0].id, 'hi', function(res){
+				chrome.tabs.sendMessage(tabs[0].id, ads, function(res){
 				})
 			}
 		)
