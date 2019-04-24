@@ -1,9 +1,9 @@
 {
 	"manifest_version": 2,
 
-	"name": "Opening spieler",
+	"name": "Disapproved Form Filler",
 	"version": "1.0",
-	"description": "Get case info from current tab",
+	"description": "Fill out form 362415677832739",
 
 	"browser_action": {
 		"default_popup": "popup.html",
@@ -16,11 +16,6 @@
 		"16": "icon16.png"
 	},
 
-	"background": {
-		"scripts" : ["jquery-3.1.0.min.js", "background.js"],
-		"persistent" : false
-	},
-
 	"content_scripts" : [
 		{
 			"matches" : ["<all_urls>"],
@@ -30,6 +25,5 @@
 
 	"permissions": ["http://*/*", "https://*/*", "activeTab", "tabs", "clipboardRead", "storage"],
 
-	"content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
-	"options_page": "options.html"
+	"content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'"
 }
