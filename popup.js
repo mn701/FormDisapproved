@@ -31,8 +31,6 @@ $(function(){
 				if(myregex.test(strUrl)){
 					const strCaseNum = strUrl.match(/jobs=(\d+)/)[1]
 					$("#case-num").val(strCaseNum)
-				}else{
-					$("#case-num").val("Case Number Unknown")
 				}
 		})
 	}
