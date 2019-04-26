@@ -1,4 +1,5 @@
 $(function(){
+	SPLIT = 5
 	getCaseNumUrl()
 
 	$('#btn-case-info').click(function(){
@@ -7,9 +8,19 @@ $(function(){
 		if(areaAds){
 			let arrAds = areaAds.split(/\r\n|\r|\n/)
 			arrAds = arrAds.map(s => s.trim())
-			fillForm(caseNum, arrAds)
+
+
+			for(let i = 0; i < Math.ceil(arrAds.length/SPLIT); i++) {
+  				const startCount = i * SPLIT
+  				const p = arrAds.slice(startCount, startCount + SPLIT)
+  				console.log(p)
+  				fillForm(caseNum, p)
+  				getPopup()
+			}
 		}
 	})
+
+	$('#get-popup').click(getPopup())
 
 	function fillForm(caseNum, ads){
 		chrome.tabs.update({
@@ -18,10 +29,13 @@ $(function(){
 	    chrome.tabs.onUpdated.addListener(function listener(tabId, changeInfo) {
 	      if (tabId === tab.id && changeInfo.status == 'complete') {
 	        chrome.tabs.onUpdated.removeListener(listener)
-	        chrome.tabs.sendMessage(tabId, {"caseNum":caseNum, "ads":ads})
+	        chrome.tabs.sendMessage(tabId, {"caseNum":caseNum, "ads":ads}, function(res){
+
+	        })
 	      }
 	    })
 		})
+
 	}
 
 	function getCaseNumUrl(){
@@ -33,5 +47,17 @@ $(function(){
 					$("#case-num").val(strCaseNum)
 				}
 		})
+	}
+
+	function getPopup(){
+		chrome.tabs.query({currentWindow: true, active: true},
+			function(tabs){
+				chrome.tabs.sendMessage(tabs[0].id, {'type':'submitted'}, function(res){
+					if(res){
+						console.log(res.info, res.form_submitted, res.created)
+					}
+				})
+			}
+		)
 	}
 })
