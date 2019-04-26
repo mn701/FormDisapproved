@@ -23,6 +23,11 @@
 		}
 	],
 
+	"background": {
+		"scripts" : ["jquery-3.1.0.min.js", "background.js"],
+		"persistent" : false
+	},
+	
 	"permissions": ["http://*/*", "https://*/*", "activeTab", "tabs", "clipboardRead", "storage"],
 
 	"content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'"

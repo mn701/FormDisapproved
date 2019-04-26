@@ -20,22 +20,22 @@ $(function(){
 		}
 	})
 
-	$('#get-popup').click(getPopup())
+	$('#get-popup').click(getPopup)
 
 	function fillForm(caseNum, ads){
-		chrome.tabs.update({
-    	url: "https://www.facebook.com/help/contact/362415677832739"
-		}, function(tab) {
-	    chrome.tabs.onUpdated.addListener(function listener(tabId, changeInfo) {
-	      if (tabId === tab.id && changeInfo.status == 'complete') {
-	        chrome.tabs.onUpdated.removeListener(listener)
-	        chrome.tabs.sendMessage(tabId, {"caseNum":caseNum, "ads":ads}, function(res){
-
-	        })
-	      }
-	    })
-		})
-
+		chrome.runtime.sendMessage({"type":"ads", "caseNum":caseNum, "ads":ads}, function (response) {});
+		// chrome.tabs.create({
+    // 	url: "https://www.facebook.com/help/contact/362415677832739"
+		// }, function(tab) {
+	  //   chrome.tabs.onUpdated.addListener(function listener(tabId, changeInfo) {
+	  //     if (tabId === tab.id && changeInfo.status == 'complete') {
+	  //       chrome.tabs.onUpdated.removeListener(listener)
+	  //       chrome.tabs.sendMessage(tabId, {"caseNum":caseNum, "ads":ads}, function(res){
+		//
+	  //       })
+	  //     }
+	  //   })
+		// })
 	}
 
 	function getCaseNumUrl(){

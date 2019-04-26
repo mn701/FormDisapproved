@@ -13,10 +13,10 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 	  $('label[for="1496973637295144.0"]').click()
 
 	  const btnAdd = document.getElementsByClassName("_271k _271m _1qjd _7tvm _7tv2 _7tv4")[0]
-	  const ad_rows = ads.length - 5
-	  for (let i = 0; i < ad_rows; i++) {
-	    btnAdd.click()
-	  }
+	  // const ad_rows = ads.length - 5
+	  // for (let i = 0; i < ad_rows; i++) {
+	  //   btnAdd.click()
+	  // }
 	  ads.forEach((item, index) => {
 	    $('._58al').eq(index).val(item)
 	  })
