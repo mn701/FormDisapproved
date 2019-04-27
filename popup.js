@@ -1,5 +1,16 @@
 $(function(){
-	SPLIT = 5
+	const SPLIT = 5
+	const bg = chrome.extension.getBackgroundPage()
+	if(bg.popups){
+		bg.popups.forEach(function(element) {
+			const div = document.createElement('div')
+			div.textContent = element
+			document.body.appendChild(div)
+		})
+	}
+
+
+
 	getCaseNumUrl()
 
 	$('#btn-case-info').click(function(){
@@ -8,7 +19,6 @@ $(function(){
 		if(areaAds){
 			let arrAds = areaAds.split(/\r\n|\r|\n/)
 			arrAds = arrAds.map(s => s.trim())
-
 
 			for(let i = 0; i < Math.ceil(arrAds.length/SPLIT); i++) {
   				const startCount = i * SPLIT
@@ -24,18 +34,6 @@ $(function(){
 
 	function fillForm(caseNum, ads){
 		chrome.runtime.sendMessage({"type":"ads", "caseNum":caseNum, "ads":ads}, function (response) {});
-		// chrome.tabs.create({
-    // 	url: "https://www.facebook.com/help/contact/362415677832739"
-		// }, function(tab) {
-	  //   chrome.tabs.onUpdated.addListener(function listener(tabId, changeInfo) {
-	  //     if (tabId === tab.id && changeInfo.status == 'complete') {
-	  //       chrome.tabs.onUpdated.removeListener(listener)
-	  //       chrome.tabs.sendMessage(tabId, {"caseNum":caseNum, "ads":ads}, function(res){
-		//
-	  //       })
-	  //     }
-	  //   })
-		// })
 	}
 
 	function getCaseNumUrl(){
