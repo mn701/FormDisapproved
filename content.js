@@ -26,12 +26,12 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 	  $('#u_0_8').click()
 	  sendResponse("hi")
 	}else if(request.type == "submitted"){
-		const info = $('#u_n_0').text() ?  $('#u_n_0').text() : ""
-		const submitted = $('#u_4_0').text() ?  $('#u_4_0').text() : ""
-		const created = $("div[class='pam _13']").text() ? $("div[class='pam _13']").text() : ""
-    chrome.runtime.sendMessage({
-      type:"popup", info:info, submitted: submitted, created:created
-    })
+		let msg = $("._t").text() ?  $("._t").text() : ""
+		msg = msg.replace("OK", "");
+		//msg += $("div[class='pam _13']").text() ? $("div[class='pam _13']").text() : ""
+	    chrome.runtime.sendMessage({
+	      type:"popup", msg:msg
+	    })
 	}
 
 })

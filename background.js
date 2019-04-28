@@ -18,9 +18,9 @@ chrome.runtime.onMessage.addListener(
             }
           })
         })
-        getPopupBg()
       }else if(request.type === "popup"){
-        window.popups.push(`${request.info} ${request.submitted} ${request.created})
+      	const msg = request.msg
+        window.popups.push(msg)
       }
   }
 )
@@ -34,15 +34,4 @@ function saveToClipboard(text) {
     copyFrom.remove();
 }
 
-function getPopupBg(){
-  chrome.tabs.query({currentWindow: true, active: true},
-    function(tabs){
-      chrome.tabs.sendMessage(tabs[0].id, {'type':'submitted'}, function(res){
-        if(res){
-          popups.push(res.info, res.form_submitted, res.created)
-          console.log(res.info, res.form_submitted, res.create)
-        }
-      })
-    }
-  )
-}
+
