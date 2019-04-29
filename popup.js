@@ -1,9 +1,14 @@
 $(function(){
 	const SPLIT = 5
 	const MSG_CK = `Could you check on below Ads?\n`
+	const MSG_CK2 = `Could you check on these ads?\n`
 	const OPT1 = `A campaign already started, so client really concerns about these Ads.\n`
 	const OPT2 = `*If this ad will not be approved, please let me know the reason clearly. because the user stick to this one.\n`
 	const OPT3 = `Both Ads are not approved, but the other Ads with same creative and copy are approved, so please give an approval to them.\n`
+	const PEND1 = `These ads has been pending review more than 24hrs.\n`
+	const PEND2 = `These Ads are under reviewing for a while, `
+	const PEND3 = `These Ads are under reviewing for more than 24hrs, `
+	const PEND4 = `please give an approval to these Ads. \n`
 	const TXT_ENTER_NAME = "(Junさん以外の場合)アイコンを右クリックして[Options]から名前をセットしてください"
 	const bg = chrome.extension.getBackgroundPage()
 	let description = "Dear team,\n\nCould you check on below Ad?\nA campaign already started, so client really concerns about this Ad.\n\n*If this ad will not be approved, please let me know the reason clearly. because the user stick to this one.\n\nBest Regards,"
@@ -87,6 +92,15 @@ $(function(){
 				break
 			case 'option3':
 				msgStr += OPT3
+				break
+			case 'pend1':
+				msgStr += MSG_CK2 + PEND1
+				break
+			case 'pend2':
+				msgStr += PEND2 + PEND4
+				break
+			case 'pend3':
+				msgStr += PEND3 + PEND4
 				break
 			default:
 		}
