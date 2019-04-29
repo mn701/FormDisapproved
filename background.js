@@ -16,7 +16,7 @@ chrome.runtime.onMessage.addListener(
           chrome.tabs.onUpdated.addListener(function listener(tabId, changeInfo) {
             if (tabId === tab.id && changeInfo.status == 'complete') {
               chrome.tabs.onUpdated.removeListener(listener)
-              chrome.tabs.sendMessage(tabId, {"caseNum":caseNum, "ads":ads, "description":description, "agentName":agentName}, function(res){})
+              chrome.tabs.sendMessage(tabId, {"type":"disapproved", "caseNum":caseNum, "ads":ads, "description":description, "agentName":agentName}, function(res){})
             }
           })
         })
@@ -30,7 +30,7 @@ chrome.runtime.onMessage.addListener(
           chrome.tabs.onUpdated.addListener(function listener(tabId, changeInfo) {
             if (tabId === tab.id && changeInfo.status == 'complete') {
               chrome.tabs.onUpdated.removeListener(listener)
-              chrome.tabs.sendMessage(tabId, {"caseNum":caseNum, "ad":ad, "description":description}, function(res){})
+              chrome.tabs.sendMessage(tabId, {"type":"pending", "caseNum":caseNum, "ad":ad, "description":description}, function(res){})
             }
           })
         })
