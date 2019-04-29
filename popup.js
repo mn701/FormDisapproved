@@ -4,7 +4,7 @@ $(function(){
 	const OPT1 = `A campaign already started, so client really concerns about these Ads.\n`
 	const OPT2 = `*If this ad will not be approved, please let me know the reason clearly. because the user stick to this one.\n`
 	const OPT3 = `Both Ads are not approved, but the other Ads with same creative and copy are approved, so please give an approval to them.\n`
-	const TXT_ENTER_NAME = "アイコンを右クリックして[Options]から名前をセットしてください"
+	const TXT_ENTER_NAME = "(Junさん以外の場合)アイコンを右クリックして[Options]から名前をセットしてください"
 	const bg = chrome.extension.getBackgroundPage()
 	let description = "Dear team,\n\nCould you check on below Ad?\nA campaign already started, so client really concerns about this Ad.\n\n*If this ad will not be approved, please let me know the reason clearly. because the user stick to this one.\n\nBest Regards,"
 	let agentName = 'Jun Iwata'
@@ -20,7 +20,7 @@ $(function(){
 	readPopupArr()
 	getCaseNumUrl()
 	
-	$('#btn-case-info').click(function(){
+	$('#btn-form-disapproved').click(function(){
 		const caseNum = $('#case-num').val()
 		const areaAds = $('#ads-area').val()
 		description = $('#description').val()
@@ -32,9 +32,19 @@ $(function(){
   				const startCount = i * SPLIT
   				const p = arrAds.slice(startCount, startCount + SPLIT)
   				console.log(p)
-  				fillForm(caseNum, p, description, agentName)
+  				fillForm("disapproved", caseNum, p, description, agentName)
   				getPopup()
 			}
+		}
+	})
+	
+	$('#btn-form-pending').click(function(){
+		const caseNum = $('#case-num').val()
+		const ad = $('#ad-input').val()
+		description = $('#description').val()
+		if(ad){
+			fillForm("pending", caseNum, ad, description)
+  			getPopup()
 		}
 	})
 
@@ -82,8 +92,8 @@ $(function(){
 		$('#description').val(msgStr)
     	})
 
-	function fillForm(caseNum, ads, description, agentName){
-		chrome.runtime.sendMessage({"type":"ads", "caseNum":caseNum, "ads":ads, "description":description, "agentName":agentName}, function (response) {});
+	function fillForm(type, caseNum, ads, description, agentName){
+		chrome.runtime.sendMessage({"type":type, "caseNum":caseNum, "ads":ads, "description":description, "agentName":agentName}, function (response) {});
 	}
 
 	function getCaseNumUrl(){
