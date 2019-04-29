@@ -1,21 +1,25 @@
 $(function(){
 	const SPLIT = 5
+	const MSG_CK = `Could you check on below Ads?\n`
+	const OPT1 = `A campaign already started, so client really concerns about these Ads.\n`
+	const OPT2 = `*If this ad will not be approved, please let me know the reason clearly. because the user stick to this one.\n`
+	const OPT3 = `Both Ads are not approved, but the other Ads with same creative and copy are approved, so please give an approval to them.\n`
 	const bg = chrome.extension.getBackgroundPage()
-	if(bg && bg.popups){
-		readPopupArr()
-	}
 	let description = "Dear team,\n\nCould you check on below Ad?\nA campaign already started, so client really concerns about this Ad.\n\n*If this ad will not be approved, please let me know the reason clearly. because the user stick to this one.\n\nBest Regards,"
+	
 	chrome.storage.sync.get('description', function(option){
 		if(option.description){
 			description = option.description
 		}
 	})
-
+	
+	readPopupArr()
 	getCaseNumUrl()
-
+	
 	$('#btn-case-info').click(function(){
 		const caseNum = $('#case-num').val()
-		const areaAds = $('#input_text').val()
+		const areaAds = $('#ads-area').val()
+		description = $('#description').val()
 		if(areaAds){
 			let arrAds = areaAds.split(/\r\n|\r|\n/)
 			arrAds = arrAds.map(s => s.trim())
@@ -46,6 +50,33 @@ $(function(){
 			copyToClipbd(copyStr)
 		}
 	})
+	
+	$('#btn-ads-clr').click(function(){
+		$('#ads-area').val("")
+	})
+	
+	$('#btn-desc-clr').click(function(){
+		$('#description').val("")
+	})
+	
+	$('input[name=descGrp]').click(function(){
+		const selected = $("input:radio[name=descGrp]:checked").val()
+		let msgStr = "Dear team,\n\n"
+		switch (selected){
+			case 'option1':
+				msgStr += MSG_CK + OPT1
+				break
+			case 'option2':
+				msgStr += MSG_CK + OPT1 + "\n" + OPT2
+				break
+			case 'option3':
+				msgStr += OPT3
+				break
+			default:
+		}
+		msgStr += "\nBest Regards,"
+		$('#description').val(msgStr)
+    	})
 
 	function fillForm(caseNum, ads, description){
 		chrome.runtime.sendMessage({"type":"ads", "caseNum":caseNum, "ads":ads, "description":description}, function (response) {});
