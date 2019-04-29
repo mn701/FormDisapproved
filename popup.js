@@ -47,8 +47,8 @@ $(function(){
 		}
 	})
 
-	function fillForm(caseNum, ads){
-		chrome.runtime.sendMessage({"type":"ads", "caseNum":caseNum, "ads":ads}, function (response) {});
+	function fillForm(caseNum, ads, description){
+		chrome.runtime.sendMessage({"type":"ads", "caseNum":caseNum, "ads":ads, "description":description}, function (response) {});
 	}
 
 	function getCaseNumUrl(){
