@@ -4,6 +4,12 @@ $(function(){
 	if(bg && bg.popups){
 		readPopupArr()
 	}
+	let description = "Dear team,\n\nCould you check on below Ad?\nA campaign already started, so client really concerns about this Ad.\n\n*If this ad will not be approved, please let me know the reason clearly. because the user stick to this one.\n\nBest Regards,"
+	chrome.storage.sync.get('description', function(option){
+		if(option.description){
+			description = option.description
+		}
+	})
 
 	getCaseNumUrl()
 
@@ -33,13 +39,13 @@ $(function(){
 
 	$('#btn-bg-copy').click(function(){
 		let copyStr = ""
-		bg.popups.forEach(function(element) {
-			copyStr += element + "\n";
-		})
-		copyToClipbd(copyStr)
+		if(bg && bg.popups){
+			bg.popups.forEach(function(element) {
+				copyStr += element + "\n";
+			})
+			copyToClipbd(copyStr)
+		}
 	})
-
-
 
 	function fillForm(caseNum, ads){
 		chrome.runtime.sendMessage({"type":"ads", "caseNum":caseNum, "ads":ads}, function (response) {});
@@ -65,11 +71,13 @@ $(function(){
 	}
 
 	function readPopupArr(){
-		document.getElementById("lst").innerHTML = ""
-		bg.popups.forEach(function(element) {
-			msgList = "<li>" + element + "</li>";
-       		document.getElementById("lst").innerHTML += msgList
-		})
+		if(bg && bg.popups){
+			document.getElementById("lst").innerHTML = ""
+			bg.popups.forEach(function(element) {
+				msgList = "<li>" + element + "</li>";
+	       		document.getElementById("lst").innerHTML += msgList
+			})
+		}
 	}
 
 	function copyToClipbd(str){
