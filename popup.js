@@ -24,7 +24,7 @@ $(function(){
   				const startCount = i * SPLIT
   				const p = arrAds.slice(startCount, startCount + SPLIT)
   				console.log(p)
-  				fillForm(caseNum, p)
+  				fillForm(caseNum, p, description)
   				getPopup()
 			}
 		}
