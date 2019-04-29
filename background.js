@@ -22,7 +22,7 @@ chrome.runtime.onMessage.addListener(
         })
       }else if (request.type === "pending") {
         const caseNum = request.caseNum
-        const ad = request.ad
+        const ad = request.ads
         const description = request.description
         chrome.tabs.create({
         	url: "https://www.facebook.com/help/contact/305334410308861"
