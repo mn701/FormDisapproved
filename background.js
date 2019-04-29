@@ -4,7 +4,7 @@ chrome.runtime.onMessage.addListener(
     	if(request && request.type == "copy"){
     		console.log(request.text)
     		saveToClipboard(request.text)
-    	}else if (request.type === "ads") {
+    	}else if (request.type === "disapproved") {
         const caseNum = request.caseNum
         const ads = request.ads
         const description = request.description
@@ -16,7 +16,21 @@ chrome.runtime.onMessage.addListener(
           chrome.tabs.onUpdated.addListener(function listener(tabId, changeInfo) {
             if (tabId === tab.id && changeInfo.status == 'complete') {
               chrome.tabs.onUpdated.removeListener(listener)
-              chrome.tabs.sendMessage(tabId, {"caseNum":caseNum, "ads":ads, "description":description, "agentName":agentName}, function(res){})
+              chrome.tabs.sendMessage(tabId, {"type":"disapproved", "caseNum":caseNum, "ads":ads, "description":description, "agentName":agentName}, function(res){})
+            }
+          })
+        })
+      }else if (request.type === "pending") {
+        const caseNum = request.caseNum
+        const ad = request.ads
+        const description = request.description
+        chrome.tabs.create({
+        	url: "https://www.facebook.com/help/contact/305334410308861"
+        }, function(tab) {
+          chrome.tabs.onUpdated.addListener(function listener(tabId, changeInfo) {
+            if (tabId === tab.id && changeInfo.status == 'complete') {
+              chrome.tabs.onUpdated.removeListener(listener)
+              chrome.tabs.sendMessage(tabId, {"type":"pending", "caseNum":caseNum, "ad":ad, "description":description}, function(res){})
             }
           })
         })

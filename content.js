@@ -1,5 +1,5 @@
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-	if(request.ads){
+	if(request.type === "disapproved"){
 		const caseNum = request.caseNum
 		const ads = request.ads
 		const description = request.description
@@ -26,6 +26,16 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 	  	// btnConfirm.click()
 	  	$('#u_0_8').click()
 	  	sendResponse("hi")
+	}else if(request.type === "pending"){
+		const caseNum = request.caseNum
+		const ad = request.ad
+		const description = request.description
+		if(caseNum){
+	    		$("#337290956413644").val(caseNum)
+	  	}
+		$("#486556404885036").val(ad)
+		$("#296084320450771").val(description)
+		$('#u_0_5').click()
 	}else if(request.type == "submitted"){
 		let msg = $("._t").text() ?  $("._t").text() : ""
 		msg = msg.replace("OK", "");
