@@ -31,7 +31,6 @@ $(function(){
 			for(let i = 0; i < Math.ceil(arrAds.length/SPLIT); i++) {
   				const startCount = i * SPLIT
   				const p = arrAds.slice(startCount, startCount + SPLIT)
-  				console.log(p)
   				fillForm("disapproved", caseNum, p, description, agentName)
   				getPopup()
 			}
@@ -40,11 +39,14 @@ $(function(){
 	
 	$('#btn-form-pending').click(function(){
 		const caseNum = $('#case-num').val()
-		const ad = $('#ad-input').val()
+		const areaAds = $('#ads-area').val()
 		description = $('#description').val()
-		if(ad){
-			fillForm("pending", caseNum, ad, description)
-  			getPopup()
+		if(areaAds){
+			let arrAds = areaAds.split(/\r\n|\r|\n/)
+			arrAds = arrAds.map(s => s.trim())
+			arrAds.forEach(function(element) {
+				fillForm("pending", caseNum, element, description, agentName)
+			})
 		}
 	})
 
