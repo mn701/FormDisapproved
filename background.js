@@ -8,6 +8,7 @@ chrome.runtime.onMessage.addListener(
         const caseNum = request.caseNum
         const ads = request.ads
         const description = request.description
+        const agentName = request.agentName
 
         chrome.tabs.create({
         	url: "https://www.facebook.com/help/contact/362415677832739"
@@ -15,7 +16,7 @@ chrome.runtime.onMessage.addListener(
           chrome.tabs.onUpdated.addListener(function listener(tabId, changeInfo) {
             if (tabId === tab.id && changeInfo.status == 'complete') {
               chrome.tabs.onUpdated.removeListener(listener)
-              chrome.tabs.sendMessage(tabId, {"caseNum":caseNum, "ads":ads, "description":description}, function(res){})
+              chrome.tabs.sendMessage(tabId, {"caseNum":caseNum, "ads":ads, "description":description, "agentName":agentName}, function(res){})
             }
           })
         })
