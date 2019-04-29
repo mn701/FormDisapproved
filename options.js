@@ -1,12 +1,12 @@
 $(function(){
-    chrome.storage.sync.get('description',function(option){
-        $('#description').val(option.description)
+    chrome.storage.sync.get('agentName',function(option){
+        $('#agent-name').val(option.agentName)
     })
 
-    $('#saveDesc').click(function(){
-        const description = $('#description').val()
-        if (description){
-            chrome.storage.sync.set({'description': description}, function(){
+    $('#saveName').click(function(){
+        const agentName = $('#agent-name').val()
+        if (agentName){
+            chrome.storage.sync.set({'agentName': agentName}, function(){
                 close()
             })
         }
