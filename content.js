@@ -3,7 +3,8 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 		const caseNum = request.caseNum
 		const ads = request.ads
 		const description = request.description
-	  	$("#317701148281405").val("Jun Iwata")
+		const agentName = request.agentName
+	  	$("#317701148281405").val(agentName)
 	  	if(caseNum){
 	    		$("#1417073758607475").val(caseNum)
 	  	}
