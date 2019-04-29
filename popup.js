@@ -4,14 +4,18 @@ $(function(){
 	const OPT1 = `A campaign already started, so client really concerns about these Ads.\n`
 	const OPT2 = `*If this ad will not be approved, please let me know the reason clearly. because the user stick to this one.\n`
 	const OPT3 = `Both Ads are not approved, but the other Ads with same creative and copy are approved, so please give an approval to them.\n`
+	const TXT_ENTER_NAME = "アイコンを右クリックして[Options]から名前をセットしてください"
 	const bg = chrome.extension.getBackgroundPage()
 	let description = "Dear team,\n\nCould you check on below Ad?\nA campaign already started, so client really concerns about this Ad.\n\n*If this ad will not be approved, please let me know the reason clearly. because the user stick to this one.\n\nBest Regards,"
-	
-	chrome.storage.sync.get('description', function(option){
-		if(option.description){
-			description = option.description
+	let agentName = 'Jun Iwata'
+	chrome.storage.sync.get('agentName', function(option){
+		if(option.agentName){
+			agentName = option.agentName
+		}else{
+			$('#err').text(TXT_ENTER_NAME)
 		}
 	})
+
 	
 	readPopupArr()
 	getCaseNumUrl()
@@ -28,7 +32,7 @@ $(function(){
   				const startCount = i * SPLIT
   				const p = arrAds.slice(startCount, startCount + SPLIT)
   				console.log(p)
-  				fillForm(caseNum, p, description)
+  				fillForm(caseNum, p, description, agentName)
   				getPopup()
 			}
 		}
@@ -78,7 +82,7 @@ $(function(){
 		$('#description').val(msgStr)
     	})
 
-	function fillForm(caseNum, ads, description){
+	function fillForm(caseNum, ads, description, agentName){
 		chrome.runtime.sendMessage({"type":"ads", "caseNum":caseNum, "ads":ads, "description":description}, function (response) {});
 	}
 
