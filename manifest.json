@@ -1,9 +1,9 @@
 {
 	"manifest_version": 2,
 
-	"name": "Disapproved Form Filler",
-	"version": "1.0",
-	"description": "Fill out form 362415677832739",
+	"name": "Policy Form Filler",
+	"version": "2.0",
+	"description": "Fill out contact forms 362415677832739 and 305334410308861",
 
 	"browser_action": {
 		"default_popup": "popup.html",
