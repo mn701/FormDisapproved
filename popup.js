@@ -21,10 +21,10 @@ $(function(){
 		}
 	})
 
-	
+
 	readPopupArr()
 	getCaseNumUrl()
-	
+
 	$('#btn-form-disapproved').click(function(){
 		const caseNum = $('#case-num').val()
 		const areaAds = $('#ads-area').val()
@@ -37,11 +37,10 @@ $(function(){
   				const startCount = i * SPLIT
   				const p = arrAds.slice(startCount, startCount + SPLIT)
   				fillForm("disapproved", caseNum, p, description, agentName)
-  				getPopup()
 			}
 		}
 	})
-	
+
 	$('#btn-form-pending').click(function(){
 		const caseNum = $('#case-num').val()
 		const areaAds = $('#ads-area').val()
@@ -71,15 +70,15 @@ $(function(){
 			copyToClipbd(copyStr)
 		}
 	})
-	
+
 	$('#btn-ads-clr').click(function(){
 		$('#ads-area').val("")
 	})
-	
+
 	$('#btn-desc-clr').click(function(){
 		$('#description').val("")
 	})
-	
+
 	$('input[name=descGrp]').click(function(){
 		const selected = $("input:radio[name=descGrp]:checked").val()
 		let msgStr = "Dear team,\n\n"
