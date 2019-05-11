@@ -38,7 +38,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 		$('#u_0_5').click()
 	}else if(request.type == "submitted"){
 		let msg = $("._t").text() ?  $("._t").text() : ""
-		msg = msg.replace("OK", "");
+		msg = msg.replace("Okay", "");
 		//msg += $("div[class='pam _13']").text() ? $("div[class='pam _13']").text() : ""
 		chrome.runtime.sendMessage({
 			type:"popup", msg:msg

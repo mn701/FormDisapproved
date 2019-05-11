@@ -123,11 +123,6 @@ $(function(){
 	}
 
 	function getPopup(){
-		// chrome.tabs.query({currentWindow: true, active: true},
-		// 	function(tabs){
-		// 		chrome.tabs.sendMessage(tabs[0].id, {'type':'submitted'}, readPopupArr)
-		// 	}
-		// )
 		chrome.tabs.query({url: "*://*.facebook.com/help/contact/*"}, function(tabs) {
 		  tabs.forEach(function(tab) {
 		    chrome.tabs.sendMessage(tab.id, {'type':'submitted'}, readPopupArr)
